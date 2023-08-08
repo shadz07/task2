@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Draw Lines</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<center>
+<h1 style="border:2px solid Violet;">draw the robot path:</h1>
+    <canvas id="myCanvas" width="600" height="300"></canvas>
+</center>
+    <script>
+	window.onload = function() {
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    
+    var isDrawing = false;
+    var startPoint = { x: 0, y: 0 };
+    
+    canvas.addEventListener("mousedown", function(event) {
+        isDrawing = true;
+        startPoint.x = event.clientX - canvas.offsetLeft;
+        startPoint.y = event.clientY - canvas.offsetTop;
+    });
+    
+    canvas.addEventListener("mousemove", function(event) {
+        if (isDrawing) {
+            var currentPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
+            
+            ctx.beginPath();
+            ctx.moveTo(startPoint.x, startPoint.y);
+            ctx.lineTo(currentPoint.x, currentPoint.y);
+            ctx.stroke();
+            
+            startPoint.x = currentPoint.x;
+            startPoint.y = currentPoint.y;
+        }
+    });
+   canvas.addEventListener("mouseup", function() {
+        isDrawing = false;
+    });
+	
+};
+
+
+	
+	
+	</script>
+	
+	
+	
+	
+	<center>
+	<button onclick="deleteShape()">Delete Shape</button>
+	<form  action="drawmap.php" method="POST">
+								<input type="submit" name="save" value="save">
+								
+							
+					</form>
+	
+	</center>
+<script>
+function deleteShape() {
+  var canvas = document.getElementById("myCanvas");
+  var context = canvas.getContext("2d");
+  
+  // Clear the canvas
+  context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+</script>
+
+
+
+
+	
+
+</body>
+</html>
